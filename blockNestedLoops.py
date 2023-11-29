@@ -3,7 +3,7 @@ from typing import List, Tuple
 import algorithmEngine
 
 
-def block_nested_loop(dataset: List[Tuple[int, int]]) -> List[Tuple[int, int]]:
+def block_nested_loop(dataset: List[Tuple[float, float]]) -> List[Tuple[float, float]]:
     """
     Calculate the skyline of a dataset using the Block Nested Loop Algorithm.
 
