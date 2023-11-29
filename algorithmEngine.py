@@ -19,7 +19,7 @@ def createTestData(numValues):
     price = np.random.normal(loc=20000, scale=5000, size=numValues)
     for i in range(numValues): # Truncate values to 2 decimal points
         miles[i] = round(miles[i], 2)
-        price[i] = round(price[i], 2) 
+        price[i] = round(price[i], 2)
     return list(zip(miles, price)) # Modify list so that each index corresponds to a (mileage, price) value pair
 
 def nestedLoop(dataSet):
@@ -43,7 +43,7 @@ def nestedLoop(dataSet):
                 dominated = True # Remember not to increment outer index, as we have deleted the current value
                 break
             else: # Else, neither of the cars dominated one another, so move on to the next one
-                j = j + 1 
+                j = j + 1
         if(dominated == False):
             i = i + 1 # Car from outer loop index was not dominated, so keep it in the set and increment to the next
     return skyline
@@ -51,12 +51,24 @@ def nestedLoop(dataSet):
 nums = createTestData(100)
 skyline = nestedLoop(nums)
 
-plt.scatter(*zip(*nums)) # Create scatterplot
-plt.scatter(*zip(*skyline))
-plt.xlabel("Mileage")
-plt.ylabel("Price")
-plt.show()
+
+def plot_data(nums, skyline):
+    """
+    Plots the data from the dataset and the skyline
+
+    @param nums: full dataset of value pairs in which we will find the skyline
+    @param skyline: list of value pairs that corresponds to a perfect skyline of the data set
+    @return: none
+    """
+    plt.scatter(*zip(*nums))  # Create scatterplot
+    plt.scatter(*zip(*skyline))
+    plt.xlabel("Mileage")
+    plt.ylabel("Price")
+    plt.show()
 
 
-    
+plot_data(nums, skyline)
+
+
+
 
