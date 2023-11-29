@@ -15,6 +15,7 @@ def createTestData(numValues):
     @return: array containing value pairs from the normal distributions from above. Any index corresponds to a value pair for a specific
         car, where the first value is the mileage, and the second value corresponds to the price
     """
+    np.random.seed(0)
     miles = np.random.normal(loc=80000, scale=20000, size=numValues)
     price = np.random.normal(loc=20000, scale=5000, size=numValues)
     for i in range(numValues): # Truncate values to 2 decimal points
@@ -48,14 +49,12 @@ def nestedLoop(dataSet):
             i = i + 1 # Car from outer loop index was not dominated, so keep it in the set and increment to the next
     return skyline
 
-nums = createTestData(100)
-skyline = nestedLoop(nums)
 
-
-def plot_data(nums, skyline):
+def plot_data(nums, skyline, title = "Skyline of Car Mileage vs. Price"):
     """
     Plots the data from the dataset and the skyline
 
+    @param title: title of the plot
     @param nums: full dataset of value pairs in which we will find the skyline
     @param skyline: list of value pairs that corresponds to a perfect skyline of the data set
     @return: none
@@ -64,10 +63,14 @@ def plot_data(nums, skyline):
     plt.scatter(*zip(*skyline))
     plt.xlabel("Mileage")
     plt.ylabel("Price")
+    plt.title(title)
     plt.show()
 
 
-plot_data(nums, skyline)
+if __name__ == "__main__":
+    nums = createTestData(100)
+    skyline = nestedLoop(nums)
+    plot_data(nums, skyline)
 
 
 
