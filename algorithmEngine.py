@@ -8,11 +8,12 @@ import matplotlib.pyplot as plt
 def createTestData(numValues):
     """
     Creates a set of test values for two factors, both over a normal distribution
-
+    
+    @param numValues: User specified number of values to generate for a dataset
     miles: normal distribution corresponding to the mileage of a specific car (mean=80,000, sigma=20,000, size=specified parameter)
     price: normal distribution corresponding to the price of a specific car (mean=20,000, sigma=5,000, size=specified parameter)
-    return: array containing value pairs from the normal distributions from above. Any index corresponds to a value pair for a specific
-    car, where the first value is the mileage, and the second value corresponds to the price
+    @return: array containing value pairs from the normal distributions from above. Any index corresponds to a value pair for a specific
+        car, where the first value is the mileage, and the second value corresponds to the price
     """
     miles = np.random.normal(loc=80000, scale=20000, size=numValues)
     price = np.random.normal(loc=20000, scale=5000, size=numValues)
@@ -24,17 +25,18 @@ def createTestData(numValues):
 def nestedLoop(dataSet):
     """
     Brute force nested loop strategy to find the skyline
-
+    
+    @param dataSet: full dataset of value pairs in shich we will find the skyline
     skyline: holds the full data set and loops through, removing any value pair that is dominated by another
-    return: list of value pairs that corresponds to a perfect skyline of the data set
+    @return: list of value pairs that corresponds to a perfect skyline of the data set
     """
-    skyline = dataSet
+    skyline = dataSet.copy()
     i = 0
-    while i < len(dataSet):
+    while i < len(skyline):
         dominated = False
         j = i + 1
-        while j < len(dataSet):
-            if skyline[i][0] <= skyline[j][0] and skyline[i][1] <= skyline[j][1]: # Car with inner loop index (j) is dominated, no need ot increment
+        while j < len(skyline):
+            if skyline[i][0] <= skyline[j][0] and skyline[i][1] <= skyline[j][1]: # Car with inner loop index (j) is dominated, no need to increment
                 del skyline[j]
             elif skyline[i][0] >= skyline[j][0] and skyline[i][1] >= skyline[j][1]: # Car with outer loop index (i) is dominated, remove and break loop
                 del skyline[i]
@@ -46,10 +48,10 @@ def nestedLoop(dataSet):
             i = i + 1 # Car from outer loop index was not dominated, so keep it in the set and increment to the next
     return skyline
 
-nums = createTestData(10000)
-plt.scatter(*zip(*nums))
-
+nums = createTestData(100)
 skyline = nestedLoop(nums)
+
+plt.scatter(*zip(*nums)) # Create scatterplot
 plt.scatter(*zip(*skyline))
 plt.xlabel("Mileage")
 plt.ylabel("Price")
