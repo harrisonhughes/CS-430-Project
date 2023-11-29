@@ -19,7 +19,7 @@ def block_nested_loop(dataset: List[Tuple[int, int]]) -> List[Tuple[int, int]]:
     """
     skyline, temp_file, window = [], [], []
     timestamp = 0
-    memory_limit = 5  # Assuming a memory limit for the window
+    memory_limit = 100
 
     for p in dataset:
         # Case 1: p is dominated by a tuple within the window
@@ -50,7 +50,6 @@ def block_nested_loop(dataset: List[Tuple[int, int]]) -> List[Tuple[int, int]]:
             temp_file.extend(window[:-memory_limit])
             window = window[-memory_limit:]
 
-    # Output tuples from the window to the skyline
     skyline.extend([p for p, _ in window if not any(dominates(q, p) for q, t in window)])
 
     return skyline
@@ -75,15 +74,7 @@ def dominates(t1, t2):
     return (t1[0] <= t2[0] and t1[1] <= t2[1]) and (t1[0] < t2[0] or t1[1] < t2[1])
 
 
-def main():
-    """
-        Main function to run the program
-    """
-    dataset = algorithmEngine.createTestData(100)
-    skyline = block_nested_loop(dataset)
-    print(skyline)
-    algorithmEngine.plot_data(dataset, skyline, "Block Nested Loop Algorithm")
-
-
 if __name__ == "__main__":
-    main()
+    dataset = algorithmEngine.createTestData(10000)
+    skyline = block_nested_loop(dataset)
+    algorithmEngine.plot_data(dataset, skyline, "Block Nested Loop Algorithm")

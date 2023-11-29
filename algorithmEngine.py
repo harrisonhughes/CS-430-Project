@@ -18,9 +18,8 @@ def createTestData(numValues):
     np.random.seed(0)
     miles = np.random.normal(loc=80000, scale=20000, size=numValues)
     price = np.random.normal(loc=20000, scale=5000, size=numValues)
-    for i in range(numValues): # Truncate values to 2 decimal points
-        miles[i] = round(miles[i], 2)
-        price[i] = round(price[i], 2)
+    miles = np.round(miles, 2)
+    price = np.round(price, 2)
     return list(zip(miles, price)) # Modify list so that each index corresponds to a (mileage, price) value pair
 
 def nestedLoop(dataSet):
@@ -48,6 +47,21 @@ def nestedLoop(dataSet):
         if(dominated == False):
             i = i + 1 # Car from outer loop index was not dominated, so keep it in the set and increment to the next
     return skyline
+
+
+def time_algorithm(algorithm, dataSet):
+    """
+    Times the algorithm passed in as a parameter
+
+    @param algorithm: algorithm to be timed
+    @param dataSet: full dataset of value pairs in which we will find the skyline
+    @return: time taken to run the algorithm
+    """
+    import time
+    start = time.time()
+    algorithm(dataSet)
+    end = time.time()
+    return end - start
 
 
 def plot_data(nums, skyline, title = "Skyline of Car Mileage vs. Price"):
