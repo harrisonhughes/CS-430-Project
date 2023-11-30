@@ -1,4 +1,4 @@
-#This part was taken from the main project
+#This part was taken from the main project to allow for creation of test data
 import numpy as np
 
 def createTestData(numValues):
