@@ -40,7 +40,7 @@ def rTree(dataSet):
             closestPoints = list(tree.nearest((leftOrig, bottomOrig, leftOrig, bottomOrig), tree.count((0, 0, maxMiles, maxPrice))))
             for i in closestPoints:
                 if i in region:
-                    newIndex = i
+                    newIndex = i # Index of nearest neighbor in same region
                     break
 
             # Add nearest neighbor to skyline, and remove from tree
