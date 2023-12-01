@@ -1,4 +1,4 @@
-#This part was taken from the main project to allow for creation of test data
+#This part was taken from the main project
 import numpy as np
 
 def createTestData(numValues):
@@ -20,7 +20,7 @@ def createTestData(numValues):
 
 #Divide and conquer approach
 
-def sortByPrice(dataSet):
+def sortByMiles(dataSet):
     """
     Function to sort the data so that a median can be found
     Without this, a median cannot be found and, therefore, it can not be partitioned properly
@@ -29,10 +29,10 @@ def sortByPrice(dataSet):
     
     @return: a sorted dataset
     """
-    sortedSet = dataSet.sort()
-    return sortedSet
+    dataSet.sort()
+    return dataSet
 
-def sortByMiles(dataSet):
+def sortByPrice(dataSet):
     """
     This function will sort by miles to allow for a median to be taken for use in the merge function
     @param dataSet: the data to sort
@@ -41,7 +41,7 @@ def sortByMiles(dataSet):
     end = len(dataSet)-1
     for i in range(0, end):
         for j in range(0, end-i):
-            if dataSet[j].miles < dataSet[i].miles:
+            if dataSet[j][1] < dataSet[i][1]:
                 temp = dataSet[i]
                 dataSet[i] = dataSet[j]
                 dataSet[j] = temp
@@ -55,13 +55,18 @@ def merge(left, right):
     @return the merged skyline as things stand
     """
     #sort the partitions by the other dimension
+    sortedLeft = []
+    sortedRight = []
     sortedLeft = sortByMiles(left)
     sortedRight = sortByMiles(right)
     #find their medians
-    leftMed = len(left)//2
-    rightMed = len(right)//2
+    leftMed = (len(left)//2) + (len(left)%2)
+    rightMed = (len(right)//2) + (len(right)%2)
     #create the result list and the partitions needed from the current partitions
     result = []
+    S11 = []
+    S12 = []
+    S21 = []
     S11 = sortedLeft[:leftMed]
     S12 = sortedLeft[leftMed:]
     S21 = sortedRight[:rightMed]
@@ -69,7 +74,12 @@ def merge(left, right):
     #S11 will always be necessary, as they are always better
     result.append(S11)
     #now remove any that are dominated by S11 in S21 and S12
-
+    i = 0
+    miniMaxPrice = S11[len(S11)-1][1]
+    while i < len(S21):
+        if S21[i][1] < miniMaxPrice:
+            result.append(S21[i])
+        
 
     return result
 
@@ -83,7 +93,7 @@ def divAndConq(dataSet, left, right):
     """
     skyline = []
     if left >= right:
-        skyline.append[dataSet[left]]
+        skyline.append(dataSet[right])
         return skyline
     med = (left-right)//2 
 
