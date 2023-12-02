@@ -67,32 +67,30 @@ def merge(left, right):
     S12 = sortedLeft[leftMed:]
     S21 = sortedRight[:rightMed]
     #S22 is unecessary, as it is always dominated
-    #S11 will always be necessary, as they are always better
-    result.append(S11)
-    #now remove any that are dominated by S11 in S21 and S12
-    i = 0
-    if dataSet == 0:
-        S11.append(S12[0])
-    miniMaxPrice = S11[0][1]
-    for i in range(len(S21)):
-        if S21[i][1] < miniMaxPrice:
-            result.append(S21[i])
+    result.extend(S11)
 
-    
-    miniMaxMiles = S11[0][0]
-    for i in range(len(S11)):
-        if S11[i][0] < miniMaxMiles:
-            miniMaxMiles = S11[i][0]
+    # now remove any that are dominated by S11 in S21 and S12
+    for car in S21:
+        worse = False
+        for other in S11:
+            if car[1] > other[1] and car[0] > other[0]:
+                worse = True
+                break
+        if not worse:
+            result.append(car)
 
-
-    for i in range(len(S12)):
-        if S12[i][0] < miniMaxMiles:
-            result.append(S12[i])
-
+    for car in S12:
+        worse = False
+        for other in S11:
+            if car[1] > other[1] and car[0] > other[0]:
+                worse = True
+                break
+        if not worse:
+            result.append(car)
     return result
 
 
-def divAndConq(dataSet, left, right, skyline):
+def divAndConq(dataSet, left, right):
     """
     Divide and conquer approach to the skyline problem
     @param dataSet: the entire database to sort through and find the skyline from
@@ -100,18 +98,17 @@ def divAndConq(dataSet, left, right, skyline):
     @return: the values in the skyline (those that are not dominated by any other value)
     """
     if left >= right:
-        skyline.append(dataSet[right])
-        return skyline
+        return dataSet[right:right+1]
     med = (left+right)//2 
 
-    leftSky = divAndConq(dataSet, left, med, skyline)
-    rightSky = divAndConq(dataSet, med + 1, right, skyline)
-    skyline = merge(leftSky, rightSky)
-    return skyline
+    leftSky = divAndConq(dataSet, left, med)
+    rightSky = divAndConq(dataSet, med + 1, right)
+    return merge(leftSky, rightSky)
 
 if __name__=="__main__":
     dataSet = createTestData(100)
-    sortByMiles(dataSet)
-    skyline = []
-    skyline = divAndConq(dataSet, 0, len(dataSet)-1, skyline)
+    dataSet = sortByMiles(dataSet)
+    print(dataSet)
+    print("data")
+    skyline = divAndConq(dataSet, 0, len(dataSet)-1)
     print(skyline)
