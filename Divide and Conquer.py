@@ -29,7 +29,9 @@ def sortByMiles(dataSet):
     
     @return: a sorted dataset
     """
-    dataSet.sort()
+    if len(dataSet) <= 1:
+        return dataSet
+    dataSet.sort(key = lambda x: x[0])
     return dataSet
 
 def sortByPrice(dataSet):
@@ -38,13 +40,9 @@ def sortByPrice(dataSet):
     @param dataSet: the data to sort
     @return: a dataset sorted by miles (the second parameter)
     """
-    end = len(dataSet)-1
-    for i in range(0, end):
-        for j in range(0, end-i):
-            if dataSet[j][1] < dataSet[i][1]:
-                temp = dataSet[i]
-                dataSet[i] = dataSet[j]
-                dataSet[j] = temp
+    if len(dataSet) <= 1:
+        return dataSet
+    dataSet.sort(key = lambda x: x[1])
     return dataSet
 
 
@@ -64,9 +62,7 @@ def merge(left, right):
     rightMed = (len(right)//2) + (len(right)%2)
     #create the result list and the partitions needed from the current partitions
     result = []
-    S11 = []
-    S12 = []
-    S21 = []
+
     S11 = sortedLeft[:leftMed]
     S12 = sortedLeft[leftMed:]
     S21 = sortedRight[:rightMed]
@@ -75,44 +71,47 @@ def merge(left, right):
     result.append(S11)
     #now remove any that are dominated by S11 in S21 and S12
     i = 0
+    if dataSet == 0:
+        S11.append(S12[0])
     miniMaxPrice = S11[0][1]
-    miniMaxMiles = S11[0][0]
-    for i in range(len(S11)):
-        if S11[i][0] < miniMaxMiles:
-            miniMaxMiles = S11[i][0]
     for i in range(len(S21)):
         if S21[i][1] < miniMaxPrice:
             result.append(S21[i])
 
+    
+    miniMaxMiles = S11[0][0]
+    for i in range(len(S11)):
+        if S11[i][0] < miniMaxMiles:
+            miniMaxMiles = S11[i][0]
+
+
     for i in range(len(S12)):
-        if S12[i][0] < miniMaxPrice:
+        if S12[i][0] < miniMaxMiles:
             result.append(S12[i])
 
     return result
 
 
-def divAndConq(dataSet, left, right):
+def divAndConq(dataSet, left, right, skyline):
     """
     Divide and conquer approach to the skyline problem
     @param dataSet: the entire database to sort through and find the skyline from
 
     @return: the values in the skyline (those that are not dominated by any other value)
     """
-    skyline = []
     if left >= right:
         skyline.append(dataSet[right])
         return skyline
-    med = (left-right)//2 
+    med = (left+right)//2 
 
-    leftSet = dataSet[:med]
-    rightSet = dataSet[med:]
-    leftSky = divAndConq(leftSet, 0, len(leftSet)-1)
-    rightSky = divAndConq(rightSet, 0, len(rightSet)-1)
+    leftSky = divAndConq(dataSet, left, med, skyline)
+    rightSky = divAndConq(dataSet, med + 1, right, skyline)
     skyline = merge(leftSky, rightSky)
     return skyline
 
 if __name__=="__main__":
     dataSet = createTestData(100)
     sortByMiles(dataSet)
-    skyline = divAndConq(dataSet, 0, len(dataSet)-1)
+    skyline = []
+    skyline = divAndConq(dataSet, 0, len(dataSet)-1, skyline)
     print(skyline)
