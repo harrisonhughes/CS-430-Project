@@ -57,8 +57,8 @@ def merge(left, right):
     #sort the partitions by the other dimension
     sortedLeft = []
     sortedRight = []
-    sortedLeft = sortByMiles(left)
-    sortedRight = sortByMiles(right)
+    sortedLeft = sortByPrice(left)
+    sortedRight = sortByPrice(right)
     #find their medians
     leftMed = (len(left)//2) + (len(left)%2)
     rightMed = (len(right)//2) + (len(right)%2)
@@ -76,10 +76,17 @@ def merge(left, right):
     #now remove any that are dominated by S11 in S21 and S12
     i = 0
     miniMaxPrice = S11[0][1]
-    while i < len(S21):
+    miniMaxMiles = S11[0][0]
+    for i in range(len(S11)):
+        if S11[i][0] < miniMaxMiles:
+            miniMaxMiles = S11[i][0]
+    for i in range(len(S21)):
         if S21[i][1] < miniMaxPrice:
             result.append(S21[i])
-        
+
+    for i in range(len(S12)):
+        if S12[i][0] < miniMaxPrice:
+            result.append(S12[i])
 
     return result
 
@@ -106,6 +113,6 @@ def divAndConq(dataSet, left, right):
 
 if __name__=="__main__":
     dataSet = createTestData(100)
-    sortByPrice(dataSet)
+    sortByMiles(dataSet)
     skyline = divAndConq(dataSet, 0, len(dataSet)-1)
     print(skyline)
