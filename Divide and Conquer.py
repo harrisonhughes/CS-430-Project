@@ -75,7 +75,7 @@ def merge(left, right):
     result.append(S11)
     #now remove any that are dominated by S11 in S21 and S12
     i = 0
-    miniMaxPrice = S11[len(S11)-1][1]
+    miniMaxPrice = S11[0][1]
     while i < len(S21):
         if S21[i][1] < miniMaxPrice:
             result.append(S21[i])
