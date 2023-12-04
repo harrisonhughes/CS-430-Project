@@ -4,6 +4,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+import nestedLoop
 
 def createTestData(numValues):
     """
@@ -56,7 +57,7 @@ def plot_data(nums, skyline, title = "Skyline of Car Mileage vs. Price"):
 
 if __name__ == "__main__":
     nums = createTestData(100)
-    skyline = nestedLoop(nums)
+    skyline = nestedLoop.nestedLoop(nums)
     plot_data(nums, skyline)
 
 
