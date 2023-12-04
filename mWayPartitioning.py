@@ -1,12 +1,11 @@
 # 430 final project
-# Teddy Bielecki
+# Teddy Bielecki, Ethan Hinni, Harrison Hughes, Phillip Lechenauer, Ian McIntyre
 # m-way partitioning algorithm
 
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
 import math
-import algorithmEngine
 
 def mWayPartitioning(dataSet):
     """
@@ -102,7 +101,3 @@ def dominates(car1, car2):
         return False
     else:
         return False
-
-data = algorithmEngine.createTestData(1000)
-skyline = mWayPartitioning(data)
-algorithmEngine.plot_data(data, skyline, "M-Way Partitioning Algorithm")
