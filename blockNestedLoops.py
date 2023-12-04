@@ -1,8 +1,5 @@
 from typing import List, Tuple
 
-import algorithmEngine
-
-
 def block_nested_loop(dataset: List[Tuple[float, float]]) -> List[Tuple[float, float]]:
     """
     Calculate the skyline of a dataset using the Block Nested Loop Algorithm.
@@ -72,9 +69,3 @@ def dominates(t1, t2):
         True if 't1' dominates 't2', False otherwise.
     """
     return (t1[0] <= t2[0] and t1[1] <= t2[1]) and (t1[0] < t2[0] or t1[1] < t2[1])
-
-
-if __name__ == "__main__":
-    dataset = algorithmEngine.createTestData(10000)
-    skyline = block_nested_loop(dataset)
-    algorithmEngine.plot_data(dataset, skyline, "Block Nested Loop Algorithm")
