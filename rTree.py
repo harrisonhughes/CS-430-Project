@@ -1,5 +1,5 @@
 # CS 430 Project
-# Harrison Hughes
+# Teddy Bielecki, Ethan Hinni, Harrison Hughes, Phillip Lechenauer, Ian McIntyre
 # Nearest neighbor algorithm without R Tree storage to calculate the skyline of a 2D dataset
 
 import numpy as np
