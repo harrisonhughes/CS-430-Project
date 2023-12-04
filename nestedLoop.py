@@ -1,3 +1,7 @@
+# CS 430 Project
+# Teddy Bielecki, Ethan Hinni, Harrison Hughes, Phillip Lechenauer, Ian McIntyre
+# Nested Loop brute force strategy to find the skyline of a 2D dataset
+
 def nestedLoop(dataSet):
     """
     Brute force nested loop strategy to find the skyline
