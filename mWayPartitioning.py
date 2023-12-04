@@ -19,7 +19,7 @@ def mWayPartitioning(dataSet):
     """
     available_memory = sys.getsizeof(dataSet)
     m = math.ceil(len(dataSet) * .0075)
-    while(m > available_memory):
+    while(m > (available_memory/2)):
         m = math.floor(m * .9)
     
     potentialSkyLines = []
