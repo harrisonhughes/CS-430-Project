@@ -1,9 +1,8 @@
 # CS 430 Project
-# Ethan Hinni
+# Teddy Bielecki, Ethan Hinni, Harrison Hughes, Phillip Lechenauer, Ian McIntyre
 # Binary Tree algorithm to find the skyline of a dataset
 
-from algorithmEngine import nestedLoop
-
+from nestedLoop import nestedLoop
 
 def bTree(dataSet):
     """
