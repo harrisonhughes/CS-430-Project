@@ -1,23 +1,4 @@
-#This part was taken from the main project
 import numpy as np
-
-def createTestData(numValues):
-    """
-    Creates a set of test values for two factors, both over a normal distribution
-    
-    @param numValues: User specified number of values to generate for a dataset
-    miles: normal distribution corresponding to the mileage of a specific car (mean=80,000, sigma=20,000, size=specified parameter)
-    price: normal distribution corresponding to the price of a specific car (mean=20,000, sigma=5,000, size=specified parameter)
-    @return: array containing value pairs from the normal distributions from above. Any index corresponds to a value pair for a specific
-        car, where the first value is the mileage, and the second value corresponds to the price
-    """
-    np.random.seed(0)
-    miles = np.random.normal(loc=80000, scale=20000, size=numValues)
-    price = np.random.normal(loc=20000, scale=5000, size=numValues)
-    miles = np.round(miles, 2)
-    price = np.round(price, 2)
-    return list(zip(miles, price)) # Modify list so that each index corresponds to a (mileage, price) value pair
-
 #Divide and conquer approach
 
 def sortByMiles(dataSet):
@@ -104,11 +85,3 @@ def divAndConq(dataSet, left, right):
     leftSky = divAndConq(dataSet, left, med)
     rightSky = divAndConq(dataSet, med + 1, right)
     return merge(leftSky, rightSky)
-
-if __name__=="__main__":
-    dataSet = createTestData(100)
-    dataSet = sortByMiles(dataSet)
-    print(dataSet)
-    print("data")
-    skyline = divAndConq(dataSet, 0, len(dataSet)-1)
-    print(skyline)
