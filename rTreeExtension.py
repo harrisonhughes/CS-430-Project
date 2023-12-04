@@ -1,5 +1,5 @@
 # CS 430 Project
-# Harrison Hughes
+# Teddy Bielecki, Ethan Hinni, Harrison Hughes, Phillip Lechenauer, Ian McIntyre
 # R Tree nearest neighbor algorithm to calculate the skyline of a 2D dataset, using rTree Python extension
 
 import numpy as np
