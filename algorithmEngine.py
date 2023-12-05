@@ -126,7 +126,7 @@ if __name__ == "__main__":
     blocknested, divconq, mway, btree = [], [], [], [] # Average time at a certain data size
 
     # Execute time trials
-    for i in range(numSizes - 1):
+    for i in range(numSizes):
         size = (i + 1) * 100000 # 100,000 increments between trials, starting at 100,000
         
         # Find total time for each algorithm to complete "numTrials - 1" number of executions
